@@ -47,7 +47,6 @@ variable "nodeport_allowed_cidrs" {
   default     = ["0.0.0.0/0"]
 }
 
-
 variable "master_instance_type" {
   description = "EC2 instance type for kubeadm control-plane node."
   type        = string
@@ -77,3 +76,14 @@ variable "ecr_repository_name" {
   type        = string
   default     = "python-api"
 }
+
+variable "github_owner" {
+  description = "GitHub username or organization that owns the application repository."
+  type        = string
+}
+
+variable "github_repository" {
+  description = "GitHub application repository allowed to assume the AWS OIDC role."
+  type        = string
+}
+
