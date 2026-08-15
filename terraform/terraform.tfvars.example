@@ -1,0 +1,25 @@
+project_name = "aws-k8s-skdy-lab"
+environment  = "lab"
+
+aws_region  = "ap-northeast-2"
+aws_profile = "default"
+
+vpc_cidr           = "10.10.0.0/16"
+public_subnet_cidr = "10.10.1.0/24"
+
+# IMPORTANT:
+# Replace this with the public IP of the PC/network from which you run SSH.
+my_ip_cidr = "175.113.140.125/32"
+
+# Architecture target: public access to Worker:30080.
+# For safer testing, change this to only your IP, e.g. ["203.0.113.10/32"].
+nodeport_allowed_cidrs = ["0.0.0.0/0"]
+
+
+master_instance_type = "t3.medium"
+worker_instance_type = "t3.large"
+root_volume_size     = 20
+
+kubernetes_minor_version = "v1.36"
+
+ecr_repository_name = "python-api"
