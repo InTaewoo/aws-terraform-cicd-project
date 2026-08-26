@@ -39,7 +39,10 @@ resource "aws_iam_role" "github_actions_ecr" {
           StringEquals = {
             "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
 
-            "token.actions.githubusercontent.com:sub" = "repo:${var.github_owner}@${var.github_owner_id}/${var.github_repository}@${var.github_repository_id}:ref:refs/heads/${var.github_branch}"
+            "token.actions.githubusercontent.com:sub" = [
+              "repo:${var.github_owner}@${var.github_owner_id}/${var.github_repository}@${var.github_repository_id}:ref:refs/heads/${var.github_branch}",
+              "repo:${var.github_owner}/${var.github_repository}:ref:refs/heads/${var.github_branch}"
+            ]
           }
         }
       }
