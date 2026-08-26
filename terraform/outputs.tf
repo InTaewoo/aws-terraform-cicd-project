@@ -31,10 +31,23 @@ output "fastapi_nodeport_url" {
   value       = "http://${aws_instance.worker.public_ip}:30080"
 }
 
-output "ssh_master" {
-  value = "ssh -i ~/.ssh/aws-k8s-cicd ubuntu@${aws_instance.master.public_ip}"
+output "master_instance_id" {
+  value = aws_instance.master.id
 }
 
-output "ssh_worker" {
-  value = "ssh -i ~/.ssh/aws-k8s-cicd ubuntu@${aws_instance.worker.public_ip}"
+output "worker_instance_id" {
+  value = aws_instance.worker.id
+}
+
+output "ssm_master_command" {
+  value = "aws ssm start-session --target ${aws_instance.master.id}"
+}
+
+output "ssm_worker_command" {
+  value = "aws ssm start-session --target ${aws_instance.worker.id}"
+}
+
+output "github_actions_role_arn" {
+  description = "IAM Role ARN used by GitHub Actions OIDC"
+  value       = aws_iam_role.github_actions_ecr.arn
 }

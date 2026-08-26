@@ -1,10 +1,10 @@
 resource "aws_instance" "master" {
-  ami                         = data.aws_ami.ubuntu.id
-  instance_type               = var.master_instance_type
-  subnet_id                   = aws_subnet.public.id
-  vpc_security_group_ids      = [aws_security_group.k8s.id]
-  associate_public_ip_address = true
-  iam_instance_profile        = aws_iam_instance_profile.node.name
+  ami                    = data.aws_ami.ubuntu.id
+  instance_type          = var.master_instance_type
+  subnet_id              = aws_subnet.public.id
+  vpc_security_group_ids = [aws_security_group.k8s.id]
+  #associate_public_ip_address = true
+  iam_instance_profile = aws_iam_instance_profile.node.name
 
   user_data = templatefile("${path.module}/scripts/bootstrap-k8s.sh.tftpl", {
     node_name                = "k8s-master"
@@ -32,12 +32,12 @@ resource "aws_instance" "master" {
 }
 
 resource "aws_instance" "worker" {
-  ami                         = data.aws_ami.ubuntu.id
-  instance_type               = var.worker_instance_type
-  subnet_id                   = aws_subnet.public.id
-  vpc_security_group_ids      = [aws_security_group.k8s.id]
-  associate_public_ip_address = true
-  iam_instance_profile        = aws_iam_instance_profile.node.name
+  ami                    = data.aws_ami.ubuntu.id
+  instance_type          = var.worker_instance_type
+  subnet_id              = aws_subnet.public.id
+  vpc_security_group_ids = [aws_security_group.k8s.id]
+  #associate_public_ip_address = true
+  iam_instance_profile = aws_iam_instance_profile.node.name
 
   user_data = templatefile("${path.module}/scripts/bootstrap-k8s.sh.tftpl", {
     node_name                = "k8s-worker"
@@ -62,4 +62,16 @@ resource "aws_instance" "worker" {
     Name = "${var.project_name}-worker"
     Role = "worker"
   }
+}
+
+
+## EC2 리소스 일시 중지
+resource "aws_ec2_instance_state" "master" {
+  instance_id = aws_instance.master.id
+  state       = "running"
+}
+
+resource "aws_ec2_instance_state" "worker" {
+  instance_id = aws_instance.worker.id
+  state       = "running"
 }

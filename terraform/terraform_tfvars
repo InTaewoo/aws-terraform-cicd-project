@@ -16,8 +16,10 @@ root_volume_size = 20
 
 kubernetes_minor_version = "v1.36"
 
-ecr_repository_name = "python-api"
+ecr_repository_name = "gitops-version-dashboard"
 
 # GitHub Actions OIDC
 github_owner      = "InTaewoo"
-github_repository = "python-api"
+github_repository = "gitops-version-dashboard"
+github_owner_id      = "81672260"
+github_repository_id = "1334880541"

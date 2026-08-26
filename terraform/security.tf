@@ -74,3 +74,12 @@ resource "aws_vpc_security_group_egress_rule" "all_outbound" {
 
   description = "Outbound Internet access"
 }
+
+resource "aws_vpc_security_group_ingress_rule" "calico_pod_internal" {
+  security_group_id = aws_security_group.k8s.id
+
+  cidr_ipv4   = "192.168.0.0/16"
+  ip_protocol = "-1"
+
+  description = "Allow Calico pod-to-pod traffic"
+}

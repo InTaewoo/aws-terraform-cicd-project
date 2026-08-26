@@ -17,12 +17,6 @@ resource "aws_iam_openid_connect_provider" "github" {
 
 # ============================================================
 # IAM Role for GitHub Actions
-#
-# Only GitHub Actions running from:
-#   InTaewoo/python-api
-#   main branch
-#
-# can assume this role.
 # ============================================================
 
 resource "aws_iam_role" "github_actions_ecr" {
@@ -45,7 +39,7 @@ resource "aws_iam_role" "github_actions_ecr" {
           StringEquals = {
             "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
 
-            "token.actions.githubusercontent.com:sub" = "repo:${var.github_owner}/${var.github_repository}:ref:refs/heads/main"
+            "token.actions.githubusercontent.com:sub" = "repo:${var.github_owner}@${var.github_owner_id}/${var.github_repository}@${var.github_repository_id}:ref:refs/heads/main"
           }
         }
       }
@@ -70,8 +64,6 @@ resource "aws_iam_role_policy" "github_actions_ecr" {
     Version = "2012-10-17"
 
     Statement = [
-      # ECR Docker login requires this action.
-      # GetAuthorizationToken cannot be restricted to one repository ARN.
       {
         Sid      = "ECRAuthorization"
         Effect   = "Allow"
@@ -79,7 +71,6 @@ resource "aws_iam_role_policy" "github_actions_ecr" {
         Resource = "*"
       },
 
-      # Push/Pull permissions are restricted to this project's ECR repo.
       {
         Sid    = "ECRPushPull"
         Effect = "Allow"

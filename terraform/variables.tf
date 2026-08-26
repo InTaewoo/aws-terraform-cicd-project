@@ -74,7 +74,7 @@ variable "kubernetes_minor_version" {
 variable "ecr_repository_name" {
   description = "ECR private repository name."
   type        = string
-  default     = "python-api"
+  default     = "gitops-version-dashboard"
 }
 
 variable "github_owner" {
@@ -87,3 +87,12 @@ variable "github_repository" {
   type        = string
 }
 
+variable "github_owner_id" {
+  description = "Immutable GitHub owner ID"
+  type        = string
+}
+
+variable "github_repository_id" {
+  description = "Immutable GitHub repository ID"
+  type        = string
+}
