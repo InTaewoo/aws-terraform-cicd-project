@@ -96,3 +96,9 @@ variable "github_repository_id" {
   description = "Immutable GitHub repository ID"
   type        = string
 }
+
+variable "github_branch" {
+  description = "GitHub branch allowed to assume the AWS OIDC role."
+  type        = string
+  default     = "master"
+}
